@@ -1,0 +1,45 @@
+################################################
+# Syntax Coloring Map For WiCo
+################################################
+
+################################################
+# Datatypes (KEYWORD1)
+################################################
+WiCo			KEYWORD1
+
+################################################
+# Methods and Functions (KEYWORD2)
+################################################
+startAP			KEYWORD2
+stopAP			KEYWORD2
+getAPIP			KEYWORD2
+connectSTA		KEYWORD2
+disconnectSTA	KEYWORD2
+setSTAtimeout	KEYWORD2
+addSTA			KEYWORD2
+startWebServer	KEYWORD2
+stopWebServer	KEYWORD2
+handleWebServer	KEYWORD2
+setWebStructure	KEYWORD2
+setAPsettings	KEYWORD2
+
+################################################
+# Instances (KEYWORD2)
+################################################
+wifiMulti		KEYWORD2
+server			KEYWORD2
+
+################################################
+# Constants (LITERAL1)
+################################################
+isAPActive		LITERAL1
+isSTAActive		LITERAL1
+isWebserverRunning	LITERAL1
+ap_max_devices	LITERAL1
+ap_ssid			LITERAL1
+ap_psk			LITERAL1
+ap_ch			LITERAL1
+ap_hide_ssid	LITERAL1
+sta_timeout		LITERAL1
+sta_ssid		LITERAL1
+sta_psk			LITERAL1

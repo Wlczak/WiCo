@@ -25,7 +25,8 @@ public:
     // STA connect methods
     void connectSTA();
     void disconnectSTA();
-    void setSTAsettings();
+    void setSTAtimeout(int timeout);
+    void addSTA(const char *ssid, const char *psk);
 
     // webserver methods
     void startWebServer();
@@ -53,7 +54,7 @@ private:
     bool ap_hide_ssid;
 
     // STA settings
-    int sta_timeout;
+    int sta_timeout = 0;
     std::vector<const char *> sta_ssid;
     std::vector<const char *> sta_psk;
 

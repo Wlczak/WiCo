@@ -33,7 +33,11 @@ void WiCo::connectSTA()
     if (!isSTAActive)
     {
         WiFi.mode(WIFI_STA);
-        setSTAsettings();
+        // setSTAsettings();
+        if (sta_timeout == 0)
+        {
+            sta_timeout = 5000;
+        }
         for (int i = 0; i < sta_ssid.size(); i++)
         {
             wifiMulti.addAP(sta_ssid.at(i), sta_psk.at(i));
@@ -42,11 +46,11 @@ void WiCo::connectSTA()
         {
             if (wifiMulti.run(sta_timeout) == WL_CONNECTED)
             {
-                Serial.println("");
+                /*Serial.println("");
                 Serial.print("WiFi connected: ");
                 Serial.print(WiFi.SSID());
                 Serial.print(" ");
-                Serial.println(WiFi.localIP());
+                Serial.println(WiFi.localIP());*/
                 break;
             }
         }

@@ -10,6 +10,7 @@
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ArduinoJson.h>
+#include <ArduinoOTA.h>
 
 class WiCo
 {
@@ -34,6 +35,12 @@ public:
     void handleWebServer();
     void setWebStructure();
 
+    // OTA
+    void startOTA();
+    void handleOTA();
+    void stopOTA();
+    void setOTAsettings(String host, String password, int port);
+
 private:
     // settings setting methods
     void setAPsettings();
@@ -57,6 +64,12 @@ private:
     int sta_timeout = 0;
     std::vector<const char *> sta_ssid;
     std::vector<const char *> sta_psk;
+
+    // OTA settings
+    String ota_host = "";
+    int ota_port = 0;
+    String ota_pass = "";
+    bool isOTAActive = false;
 
     // STA class
     ESP8266WiFiMulti wifiMulti;

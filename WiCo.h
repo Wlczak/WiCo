@@ -9,7 +9,7 @@
 #include <ESP8266WiFiMulti.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
-//#include <ArduinoJson.h>
+#include <ArduinoJson.h>
 
 class WiCo
 {

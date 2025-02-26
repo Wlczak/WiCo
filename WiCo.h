@@ -42,7 +42,7 @@ public:
 
     // OTA
     void startOTA();
-    void handleOTA();
+    void runOTA();
     void stopOTA();
     void setOTAsettings(String host, String password, int port);
 

@@ -46,7 +46,7 @@ void WiCo::stopOTA()
     }
 }
 
-void WiCo::handleOTA()
+void WiCo::runOTA()
 {
     if (isOTAActive)
     {

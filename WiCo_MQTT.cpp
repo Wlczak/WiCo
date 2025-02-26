@@ -11,8 +11,10 @@ void WiCo::connectMQTT(String server, int port)
 void WiCo::connectMQTT()
 {
     client.setClient(espClient);
+    client.setBufferSize(1024);
     client.setServer(mqtt_server, mqtt_port);
-    client.setCallback(WiCo::handleInMQTT);
+    client.setCallback([this](char *topic, byte *payload, unsigned int length)
+                       { handleInMQTT(topic, payload, length); });
 
     if (mqtt_user == "" || mqtt_pass == "")
     {
@@ -34,14 +36,29 @@ void WiCo::connectMQTT()
 
 void WiCo::handleInMQTT(char *topic, byte *payload, unsigned int length)
 {
-    Serial.print("Message arrived [");
-    Serial.print(topic);
-    Serial.print("] ");
+    std::string message;
     for (int i = 0; i < length; i++)
     {
-        Serial.print((char)payload[i]);
+        message += static_cast<char>(payload[i]);
     }
-    Serial.println();
+
+    for (size_t i = 0; i < mqtt_topics.size(); ++i)
+    {
+        if (strcmp(topic, mqtt_topics[i]) == 0)
+        {
+            mqtt_subscribers[i](topic, message.c_str());
+        }
+    }
+
+    /*
+     Serial.print("Message arrived [");
+     Serial.print(topic);
+     Serial.print("] ");
+     for (int i = 0; i < length; i++)
+     {
+         Serial.print((char)payload[i]);
+     }
+     Serial.println();*/
 }
 
 void WiCo::reconnectMQTT()
@@ -49,20 +66,13 @@ void WiCo::reconnectMQTT()
     // Loop until we're reconnected
     while (!client.connected())
     {
-        Serial.print("Attempting MQTT connection...");
-        // Create a random client ID
-        String clientId = "ESP8266Client-";
-        clientId += String(random(0xffff), HEX);
-        // Attempt to connect
-        Serial.println("Connecting...");
         connectMQTT();
         if (!client.connected())
         {
             Serial.print("failed, rc=");
             Serial.print(client.state());
             Serial.println(" try again in 5 seconds");
-            // Wait 5 seconds before retrying
-            delay(5000);
+            delay(3000);
         }
     }
 }
@@ -72,9 +82,11 @@ void WiCo::publishMQTT(const char *topic, const char *message)
     client.publish(topic, message);
 }
 
-void WiCo::subscribeMQTT(const char *topic)
+void WiCo::subscribeMQTT(const char *topic, void (*callback)(const char *, const char *))
 {
     client.subscribe(topic);
+    mqtt_topics.push_back(topic);
+    mqtt_subscribers.push_back(callback);
 }
 
 void WiCo::runMQTT()

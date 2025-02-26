@@ -46,11 +46,11 @@ public:
 
     // MQTT
     void connectMQTT(String server, int port);
-    static void handleInMQTT(char *topic, byte *payload, unsigned int length);
+    void handleInMQTT(char *topic, byte *payload, unsigned int length);
     void reconnectMQTT();
     void runMQTT();
     void publishMQTT(const char *topic, const char *message);
-    void subscribeMQTT(const char *topic);
+    void subscribeMQTT(const char *topic, void (*callback)(const char *,const char *));
     void setMQTTId(const char *id);
     void setMQTTAuth(const char *user, const char *pass);
 
@@ -102,6 +102,9 @@ private:
     const char *mqtt_id = String(random(0xffff), HEX).c_str();
     const char *mqtt_user = "";
     const char *mqtt_pass = "";
+
+    std::vector<std::function<void(const char *,const char *)>> mqtt_subscribers;
+    std::vector<const char *> mqtt_topics;
 
     unsigned long lastMsg = 0;
 #define MSG_BUFFER_SIZE (50)

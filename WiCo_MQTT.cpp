@@ -67,6 +67,16 @@ void WiCo::reconnectMQTT()
     }
 }
 
+void WiCo::publishMQTT(const char *topic, const char *message)
+{
+    client.publish(topic, message);
+}
+
+void WiCo::subscribeMQTT(const char *topic)
+{
+    client.subscribe(topic);
+}
+
 void WiCo::runMQTT()
 {
     if (!client.connected())

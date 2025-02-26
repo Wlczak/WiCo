@@ -49,6 +49,8 @@ public:
     static void handleInMQTT(char *topic, byte *payload, unsigned int length);
     void reconnectMQTT();
     void runMQTT();
+    void publishMQTT(const char *topic, const char *message);
+    void subscribeMQTT(const char *topic);
     void setMQTTId(const char *id);
     void setMQTTAuth(const char *user, const char *pass);
 

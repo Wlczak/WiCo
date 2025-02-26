@@ -56,4 +56,16 @@ void WiCo::handleOTA()
 
 void WiCo::setOTAsettings(String host = "", String password = "", int port = 0)
 {
+    if (host != "")
+    {
+        ota_host = host;
+    }
+    if (password != "")
+    {
+        ota_pass = password;
+    }
+    if (port != 0)
+    {
+        ota_port = port;
+    }
 }

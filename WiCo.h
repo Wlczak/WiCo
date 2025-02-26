@@ -7,10 +7,15 @@
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WiFiMulti.h>
+#include <ESP8266mDNS.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ArduinoJson.h>
 #include <ArduinoOTA.h>
+#include <WiFiUdp.h>
+
+
+
 
 class WiCo
 {

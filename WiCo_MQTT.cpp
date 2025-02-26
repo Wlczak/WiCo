@@ -77,9 +77,9 @@ void WiCo::reconnectMQTT()
     }
 }
 
-void WiCo::publishMQTT(const char *topic, const char *message)
+void WiCo::publishMQTT(const char *topic, const char *message, bool persistent)
 {
-    client.publish(topic, message);
+    client.publish(topic, message, persistent);
 }
 
 void WiCo::subscribeMQTT(const char *topic, void (*callback)(const char *, const char *))

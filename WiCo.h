@@ -49,8 +49,8 @@ public:
     void handleInMQTT(char *topic, byte *payload, unsigned int length);
     void reconnectMQTT();
     void runMQTT();
-    void publishMQTT(const char *topic, const char *message);
-    void subscribeMQTT(const char *topic, void (*callback)(const char *,const char *));
+    void publishMQTT(const char *topic, const char *message, bool persistent = false);
+    void subscribeMQTT(const char *topic, void (*callback)(const char *, const char *));
     void setMQTTId(const char *id);
     void setMQTTAuth(const char *user, const char *pass);
 
@@ -103,7 +103,7 @@ private:
     const char *mqtt_user = "";
     const char *mqtt_pass = "";
 
-    std::vector<std::function<void(const char *,const char *)>> mqtt_subscribers;
+    std::vector<std::function<void(const char *, const char *)>> mqtt_subscribers;
     std::vector<const char *> mqtt_topics;
 
     unsigned long lastMsg = 0;

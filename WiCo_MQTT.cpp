@@ -8,7 +8,8 @@ void WiCo::connectMQTT(String server, int port)
     connectMQTT();
 }
 
-void WiCo::connectMQTT(){
+void WiCo::connectMQTT()
+{
     client.setClient(espClient);
     client.setServer(mqtt_server, mqtt_port);
     client.setCallback(WiCo::handleInMQTT);
@@ -19,6 +20,14 @@ void WiCo::connectMQTT(){
     }
     else
     {
+        Serial.println("Connecting...");
+        Serial.print("Id: ");
+        Serial.println(mqtt_id);
+        Serial.print("User: ");
+        Serial.println(mqtt_user);
+        Serial.print("Pass: ");
+        Serial.println(mqtt_pass);
+
         client.connect(mqtt_id, mqtt_user, mqtt_pass);
     }
 }
@@ -46,15 +55,8 @@ void WiCo::reconnectMQTT()
         clientId += String(random(0xffff), HEX);
         // Attempt to connect
         Serial.println("Connecting...");
-        if (connectMQTT())
-        {
-            Serial.println("connected");
-            // Once connected, publish an announcement...
-            client.publish("4hs1/vlceka/wemos/hello", "hello world");
-            // ... and resubscribe
-            client.subscribe("4hs1/vlceka/wemos/led");
-        }
-        else
+        connectMQTT();
+        if (!client.connected())
         {
             Serial.print("failed, rc=");
             Serial.print(client.state());
@@ -74,12 +76,13 @@ void WiCo::runMQTT()
     client.loop();
 }
 
-void WiCo::setMQTTId(String id)
+void WiCo::setMQTTId(const char *id)
 {
-    mqtt_id = id.c_str();
+    mqtt_id = id;
 }
 
-void WiCo::setMQTTAuth(String user, String pass){
-    mqtt_user = user.c_str();
-    mqtt_pass = pass.c_str();
+void WiCo::setMQTTAuth(const char *user, const char *pass)
+{
+    mqtt_user = user;
+    mqtt_pass = pass;
 }

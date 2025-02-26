@@ -49,12 +49,11 @@ public:
     static void handleInMQTT(char *topic, byte *payload, unsigned int length);
     void reconnectMQTT();
     void runMQTT();
-    void setMQTTId(String id);
-    void setMQTTAuth(String user, String pass);
+    void setMQTTId(const char *id);
+    void setMQTTAuth(const char *user, const char *pass);
 
 private:
     void connectMQTT();
-
 
     // settings setting methods
     void setAPsettings();

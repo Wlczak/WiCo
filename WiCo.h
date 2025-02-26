@@ -13,9 +13,7 @@
 #include <ArduinoJson.h>
 #include <ArduinoOTA.h>
 #include <WiFiUdp.h>
-
-
-
+#include <PubSubClient.h>
 
 class WiCo
 {
@@ -46,7 +44,18 @@ public:
     void stopOTA();
     void setOTAsettings(String host, String password, int port);
 
+    // MQTT
+    void connectMQTT(String server, int port);
+    static void handleInMQTT(char *topic, byte *payload, unsigned int length);
+    void reconnectMQTT();
+    void runMQTT();
+    void setMQTTId(String id);
+    void setMQTTAuth(String user, String pass);
+
 private:
+    void connectMQTT();
+
+
     // settings setting methods
     void setAPsettings();
 
@@ -81,6 +90,22 @@ private:
 
     // web server
     ESP8266WebServer *server;
+
+    // MQTT stuff
+    WiFiClient espClient;
+
+    PubSubClient client;
+
+    const char *mqtt_server;
+    int mqtt_port;
+    const char *mqtt_id = String(random(0xffff), HEX).c_str();
+    const char *mqtt_user = "";
+    const char *mqtt_pass = "";
+
+    unsigned long lastMsg = 0;
+#define MSG_BUFFER_SIZE (50)
+    char msg[MSG_BUFFER_SIZE];
+    int value = 0;
 };
 
 #endif

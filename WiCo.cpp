@@ -46,11 +46,11 @@ void WiCo::connectSTA()
         {
             if (wifiMulti.run(sta_timeout) == WL_CONNECTED)
             {
-                /*Serial.println("");
+                Serial.println("");
                 Serial.print("WiFi connected: ");
                 Serial.print(WiFi.SSID());
                 Serial.print(" ");
-                Serial.println(WiFi.localIP());*/
+                Serial.println(WiFi.localIP());
                 break;
             }
         }

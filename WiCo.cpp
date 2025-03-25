@@ -34,10 +34,12 @@ void WiCo::connectSTA()
     {
         WiFi.mode(WIFI_STA);
         // setSTAsettings();
+        Serial.println("Connecting to WiFi");
         if (sta_timeout == 0)
         {
             sta_timeout = 5000;
         }
+        Serial.print("Adding networks: ");
         for (int i = 0; i < sta_ssid.size(); i++)
         {
             wifiMulti.addAP(sta_ssid.at(i), sta_psk.at(i));
